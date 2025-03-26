@@ -69,7 +69,7 @@ namespace FinancialControl.API.Controllers
         [ProducesResponseType(typeof(decimal), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        [Route("daily-daily")]
+        [Route("daily-balance")]
         public async Task<IActionResult> GetDailyBalance([FromQuery] DateTime date)
         {
             try
