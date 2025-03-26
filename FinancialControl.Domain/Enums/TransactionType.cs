@@ -3,6 +3,6 @@
     public enum TransactionType
     {
         Receita = 1,
-        Despesa =2
+        Despesa = 2
     }
 }

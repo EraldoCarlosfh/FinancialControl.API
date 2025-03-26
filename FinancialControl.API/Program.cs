@@ -1,7 +1,11 @@
 using FinancialControl.Infra.Data;
 using FinancialControl.Infra.Module;
+using FinancialControl.Application.Module;
+using FinancialControl.Worker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using FinancialControl.Api.Mappings;
+using FinancialControl.Application.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,13 +95,20 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.ConfigureRepositories();
+builder.Services.ConfigureServices();
+builder.Services.ConfigureAutoMapper();
+
 builder.Services.AddOptions();
+
+// Configuração do SMTP
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+
+builder.Services.AddHostedService<NegativeBalanceNotifier>();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FinancialControl.API"));
     app.UseHsts();

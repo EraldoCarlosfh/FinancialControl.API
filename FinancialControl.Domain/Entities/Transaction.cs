@@ -9,5 +9,12 @@ namespace FinancialControl.Domain.Entities
         public DateTime Date { get; set; }
         public string Description { get; set; } = string.Empty;
         public decimal Amount { get; set; }
+
+        public void UpdateTransaction(TransactionType type, string description, decimal amount)
+        {
+            Type = type;
+            Description = description;
+            Amount = amount;
+        }
     }
 }

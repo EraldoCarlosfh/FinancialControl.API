@@ -10,7 +10,7 @@ namespace FinancialControl.Infra.Configurations
         {
             builder.ToTable("Transaction");
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd().HasDefaultValueSql("uuid_generate_v4()");
+            builder.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Property(c => c.Type);        
             builder.Property(c => c.Date).HasMaxLength(20).IsRequired();
             builder.Property(c => c.Description).HasMaxLength(128).IsRequired();
