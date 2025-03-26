@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FinancialControl.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class FinancialController : ControllerBase
     {
         private readonly ILogger<FinancialController> _logger;
