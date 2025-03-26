@@ -34,9 +34,8 @@ namespace FinancialControl.Tests.Services
         [Fact]
         public async Task AddTransactionAsync_ShouldThrowException_WhenAmountIsZeroOrNegative()
         {
-            var transactionDto = new TransactionDto
+            var transactionDto = new TransactionRequest
             {
-                Date = DateTime.UtcNow,
                 Amount = 0,
                 Description = "Test Transaction",
                 Type = TransactionType.Receita
@@ -51,9 +50,8 @@ namespace FinancialControl.Tests.Services
         [Fact]
         public async Task AddTransactionAsync_ShouldAddTransaction_WhenValidDataProvided()
         {    
-            var transactionDto = new TransactionDto
-            {
-                Date = DateTime.UtcNow,
+            var transactionDto = new TransactionRequest
+            {        
                 Amount = 100,
                 Description = "Test Transaction",
                 Type = TransactionType.Receita
@@ -73,8 +71,7 @@ namespace FinancialControl.Tests.Services
 
             var result = await _transactionService.AddTransactionAsync(transactionDto);
 
-            Assert.NotNull(result);
-            Assert.Equal(transactionDto.Date, result.Date);
+            Assert.NotNull(result);           
             Assert.Equal(transactionDto.Amount, result.Amount);
             Assert.Equal(transactionDto.Description, result.Description);
             Assert.Equal(transactionDto.Type, result.Type);

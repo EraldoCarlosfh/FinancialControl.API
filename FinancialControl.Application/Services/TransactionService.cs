@@ -5,7 +5,6 @@ using FinancialControl.Domain.Dtos;
 using FinancialControl.Domain.Entities;
 using FinancialControl.Domain.Enums;
 using FinancialControl.Infra.Interfaces;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinancialControl.Application.Services
 {
@@ -18,17 +17,18 @@ namespace FinancialControl.Application.Services
             _transactionRepository = transactionRepository;
         }
 
-        public async Task<Transaction> AddTransactionAsync(TransactionDto transactionDto)
+        public async Task<Transaction> AddTransactionAsync(TransactionRequest transactionRequest)
         {
             try
             {
-                if (transactionDto == null)
+                if (transactionRequest == null)
                     throw new ApplicationException("Dados para cadastro inválidos.");
 
-                if (transactionDto.Amount <= 0)
+                if (transactionRequest.Amount <= 0)
                     throw new ApplicationException("O valor da transação deve ser maior que zero.");
 
-                var transaction = transactionDto.ToEntity();
+                var transaction = new Transaction();
+                transaction.CreateTransaction(transactionRequest.Type, transactionRequest.Description, transactionRequest.Amount);
 
                 _transactionRepository.AddAsync(transaction);
                 await _transactionRepository.SaveChangesAsync();

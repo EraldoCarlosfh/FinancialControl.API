@@ -24,7 +24,7 @@ namespace FinancialControl.API.Controllers
         [ProducesResponseType(typeof(TransactionViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] TransactionDto transactionDto)
+        public async Task<IActionResult> Create([FromBody] TransactionRequest transactionDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -91,7 +91,7 @@ namespace FinancialControl.API.Controllers
         [ProducesResponseType(typeof(TransactionViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> AddTransaction([FromBody] TransactionDto transactionDto)
+        public async Task<IActionResult> AddTransaction([FromBody] TransactionRequest transactionDto)
         {
             var response = await _transactionService.AddTransactionAsync(transactionDto);
 

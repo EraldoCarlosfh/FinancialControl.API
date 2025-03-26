@@ -7,9 +7,9 @@ namespace FinancialControl.Application.Interfaces
 {
     public interface ITransactionService
     {
-        Task<Transaction> AddTransactionAsync(TransactionDto transactionDto);
+        Task<Transaction> AddTransactionAsync(TransactionRequest transactionRequest);
         Task<Transaction> GetByIdAsync(Guid id);
-        Task<Transaction> UpdateTransactionAsync(TransactionRequest transactionDto);
+        Task<Transaction> UpdateTransactionAsync(TransactionRequest transactionRequest);
         Task<decimal> GetDailyBalanceAsync(DateTime date);
         Task<IEnumerable<DailyBalanceResultDto>> GetNegativeBalanceDaysAsync();
         Task<IEnumerable<Transaction>> GetTransactionsByDateRangeAsync(DateTime startDate, DateTime endDate);
