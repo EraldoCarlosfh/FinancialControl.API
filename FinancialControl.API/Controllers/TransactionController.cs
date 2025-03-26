@@ -96,26 +96,10 @@ namespace FinancialControl.API.Controllers
 
             if (response == null) return NotFound();
 
-            var viewModel = _mapper.Map<DailyBalanceViewModel>(response);
+            var viewModel = _mapper.Map<IEnumerable<DailyBalanceViewModel>>(response);
 
             return CustomResponse(viewModel);
-        }
-
-        [HttpPost]
-        [Route("add-transaction")]
-        [ProducesResponseType(typeof(TransactionViewModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> AddTransaction([FromBody] TransactionRequest transactionDto)
-        {
-            var response = await _transactionService.AddTransactionAsync(transactionDto);
-
-            if (response == null) return NotFound();
-
-            var viewModel = _mapper.Map<TransactionViewModel>(response);
-
-            return CustomResponse(viewModel);
-        }
+        }        
 
         [HttpPut]
         [Route("update-transaction")]
