@@ -41,5 +41,10 @@ namespace FinancialControl.API.Controllers
         {
             return Ok(new ApiResult(true, "Sucesso", viewmodel));
         }
+
+        protected IActionResult CustomResponse<T>(IEnumerable<T> viewmodel)
+        {
+            return Ok(new ApiResult(true, "Sucesso", viewmodel));
+        }
     }
 }

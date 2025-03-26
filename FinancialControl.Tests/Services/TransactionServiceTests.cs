@@ -81,6 +81,41 @@ namespace FinancialControl.Tests.Services
         }
 
         [Fact]
+        public async Task GeAllAsync_ShouldReturnTransaction_WhenTransactionExists()
+        {
+            var expectedTransactions = new List<Transaction>
+            {
+                new Transaction { Id = Guid.NewGuid(), Type = TransactionType.Receita, Date = DateTime.Now, Amount = 100, Description = "Test 1" },
+                new Transaction { Id = Guid.NewGuid(), Type = TransactionType.Despesa, Date = DateTime.Now, Amount = 200, Description = "Test 2" }
+            };
+
+            _transactionRepositoryMock.Setup(repo => repo.GetAllAsync())
+                     .ReturnsAsync(expectedTransactions);
+
+            var result = await _transactionService.GetAllAsync();
+
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count());
+            Assert.Equal(expectedTransactions, result);
+            _transactionRepositoryMock.Verify(repo => repo.GetAllAsync(), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetAllAsync_ShouldThrowException_WhenTransactionDoesNotExist()
+        {
+            var emptyTransactionList = Enumerable.Empty<Transaction>();
+
+            _transactionRepositoryMock.Setup(repo => repo.GetAllAsync())
+                     .ReturnsAsync(emptyTransactionList);
+
+            var exception = await Assert.ThrowsAsync<ApplicationException>(
+                () => _transactionService.GetAllAsync());
+
+            Assert.Equal("Não existem transações cadastradas", exception.Message);
+            _transactionRepositoryMock.Verify(repo => repo.GetAllAsync(), Times.Once);
+        }
+
+        [Fact]
         public async Task GetByIdAsync_ShouldReturnTransaction_WhenTransactionExists()
         {
             var transactionId = Guid.NewGuid();

@@ -40,6 +40,21 @@ namespace FinancialControl.API.Controllers
         [ProducesResponseType(typeof(TransactionViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [Route("")]
+        public async Task<IActionResult> GetAllTransactions()
+        {
+            var response = await _transactionService.GetAllAsync();
+            if (response == null) return NotFound();
+
+            var viewModel = _mapper.Map<IEnumerable<TransactionViewModel>>(response);
+
+            return CustomResponse(viewModel);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(TransactionViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         [Route("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

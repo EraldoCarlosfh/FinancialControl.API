@@ -41,6 +41,15 @@ namespace FinancialControl.Application.Services
             }
         }
 
+        public async Task<IEnumerable<Transaction>> GetAllAsync()
+        {
+            var transactions = await _transactionRepository.GetAllAsync();
+            if (transactions.Count() == 0)
+                throw new ApplicationException($"Não existem transações cadastradas");
+
+            return transactions;
+        }
+
         public async Task<Transaction> GetByIdAsync(Guid id)
         {
             var existingTransaction = await _transactionRepository.GetByIdAsync(id);
