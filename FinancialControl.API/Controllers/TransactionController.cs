@@ -1,6 +1,5 @@
 using AutoMapper;
 using FinancialControl.API.ViewModels;
-using FinancialControl.Application.Dtos;
 using FinancialControl.Application.Interfaces;
 using FinancialControl.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
